@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "800428367223",
+    "project_id": "cyberdevilz-catalog-app",
+    "storage_bucket": "cyberdevilz-catalog-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800428367223:android:cae8abbab7389042d59572",
+        "android_client_info": {
+          "package_name": "com.example.catalog_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800428367223-g0h7vbjgg8blos9ptjqocov93m7k58gs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.catalog_app",
+            "certificate_hash": "cc47bc43730c03f15064b857e4623358ac921bd1"
+          }
+        },
+        {
+          "client_id": "800428367223-51tekc375ni9023sq0tlk425o2g6nltf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkjai7bkU-Nls8u_CzETaFoTxMM4PM8M4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800428367223-51tekc375ni9023sq0tlk425o2g6nltf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
