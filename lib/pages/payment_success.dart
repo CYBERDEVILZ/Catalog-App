@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class PaymentSuccess extends StatefulWidget {
   const PaymentSuccess({Key? key}) : super(key: key);
@@ -9,14 +10,23 @@ class PaymentSuccess extends StatefulWidget {
 
 class _PaymentSuccessState extends State<PaymentSuccess> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    delay();
+  }
+
+  void delay() async {
+    await Future.delayed(const Duration(milliseconds: 2500));
+    Navigator.pop(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
-        child: AnimatedContainer(
-      duration: const Duration(seconds: 2),
-      child: const Icon(
-        Icons.ac_unit,
-        size: 100,
-      ),
+        child: Lottie.asset(
+      "assets/lottie/done.json",
+      repeat: false,
     ));
   }
 }
