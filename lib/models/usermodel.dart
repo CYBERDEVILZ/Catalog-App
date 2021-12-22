@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -5,7 +7,7 @@ class UserModel with ChangeNotifier {
   String? _uid;
   String? _username;
   String? _email;
-  String? _imageurl;
+  File? _imageurl;
 
   get uid => _uid;
   get username => _username;

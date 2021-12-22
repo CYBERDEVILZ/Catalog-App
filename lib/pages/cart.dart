@@ -100,7 +100,6 @@ class _CartState extends State<Cart> {
       'name': 'Catalog App',
       'order_id': response_json["id"], // Generate order_id using Orders API
       'description': 'Total Price',
-      'timeout': 60, // in seconds
     };
 
     _razorpay.open(options);
@@ -239,21 +238,6 @@ class _CartState extends State<Cart> {
                       onPressed: Cart.cartList.isEmpty
                           ? null
                           : () {
-                              // ScaffoldMessenger.of(context)
-                              //     .showSnackBar(SnackBar(
-                              //   dismissDirection: DismissDirection.horizontal,
-                              //   content: Container(
-                              //     alignment: Alignment.center,
-                              //     height: 30,
-                              //     child: Text("Buying not supported yet",
-                              //         style: TextStyle(
-                              //           color: Theme.of(context).canvasColor,
-                              //         )),
-                              //   ),
-                              //   behavior: SnackBarBehavior.fixed,
-                              //   duration: const Duration(seconds: 1),
-                              //   backgroundColor: Theme.of(context).cursorColor,
-                              // ));
                               order(amount: getTotalPrice());
                             },
                       child: Text("Proceed to Buy"))

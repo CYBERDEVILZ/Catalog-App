@@ -1,22 +1,33 @@
+import 'dart:io';
+
 import 'package:catalog_app/models/usermodel.dart';
 import 'package:catalog_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/src/provider.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  MyDrawer({Key? key}) : super(key: key);
+
+  XFile? filepath;
 
   @override
   Widget build(BuildContext context) {
+    Future<void> pickImage() async {
+      final imagePicker = ImagePicker();
+      filepath = await imagePicker.pickImage(source: ImageSource.gallery);
+      context.read<UserModel>().setimageurl(File(filepath!.path));
+    }
+
     // drawer header
     final drawerHeader = Container(
         color: Theme.of(context).cursorColor,
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(children: [
-              Stack(children: [
+              Stack(clipBehavior: Clip.none, children: [
                 context.watch<UserModel>().imageurl == null
                     ? CircleAvatar(
                         child: Icon(Icons.account_circle,
@@ -26,16 +37,16 @@ class MyDrawer extends StatelessWidget {
                       )
                     : CircleAvatar(
                         backgroundImage:
-                            NetworkImage(context.watch<UserModel>().imageurl),
+                            FileImage(context.watch<UserModel>().imageurl),
                         radius: 50,
                         backgroundColor: Theme.of(context).cursorColor,
                       ),
                 Positioned(
-                    bottom: 0,
-                    right: 0,
+                    bottom: -5,
+                    right: -5,
                     child: GestureDetector(
-                      onTap: () {
-                        print("redirect to upload page and update firestore");
+                      onTap: () async {
+                        await pickImage();
                       },
                       child: Icon(
                         Icons.edit,
@@ -113,5 +124,3 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
-
-class Usermodel {}
