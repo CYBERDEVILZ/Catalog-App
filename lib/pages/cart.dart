@@ -1,4 +1,5 @@
 import 'package:catalog_app/models/item.dart';
+import 'package:catalog_app/pages/payment_success.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart';
@@ -58,6 +59,11 @@ class _CartState extends State<Cart> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PaymentSuccess(),
+        ));
     // Do something when payment succeeds
   }
 
