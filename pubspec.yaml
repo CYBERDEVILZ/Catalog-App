@@ -45,6 +45,7 @@ dependencies:
   razorpay_flutter: ^1.2.7
   image_picker: ^0.8.4+4
   lottie: ^1.2.1
+  firebase_storage: ^10.2.4
 
 dev_dependencies:
   flutter_test:

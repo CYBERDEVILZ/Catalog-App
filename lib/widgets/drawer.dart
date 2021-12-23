@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:catalog_app/models/usermodel.dart';
 import 'package:catalog_app/utils/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/src/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({Key? key}) : super(key: key);
@@ -15,10 +16,24 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var uidImage = "${Provider.of<UserModel>(context, listen: false).uid}.jpg";
+
     Future<void> pickImage() async {
       final imagePicker = ImagePicker();
       filepath = await imagePicker.pickImage(source: ImageSource.gallery);
-      context.read<UserModel>().setimageurl(File(filepath!.path));
+      final FirebaseStorage storage = FirebaseStorage.instance;
+      Reference refer = storage.ref().child("images").child(uidImage);
+      await refer.putFile(File(filepath!.path)).then((value) async {
+        String url = await refer.getDownloadURL();
+        context.read<UserModel>().setimageurl(url);
+        final _auth = FirebaseFirestore.instance;
+        await _auth
+            .collection("user")
+            .doc(Provider.of<UserModel>(context, listen: false).uid)
+            .update({"imageurl": url});
+      }).catchError((onError) {
+        print(onError);
+      });
     }
 
     // drawer header
@@ -37,7 +52,9 @@ class MyDrawer extends StatelessWidget {
                       )
                     : CircleAvatar(
                         backgroundImage:
-                            FileImage(context.watch<UserModel>().imageurl),
+                            AssetImage("assets/lottie/loading.gif"),
+                        foregroundImage:
+                            NetworkImage(context.watch<UserModel>().imageurl),
                         radius: 50,
                         backgroundColor: Theme.of(context).cursorColor,
                       ),

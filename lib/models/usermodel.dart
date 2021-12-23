@@ -7,7 +7,7 @@ class UserModel with ChangeNotifier {
   String? _uid;
   String? _username;
   String? _email;
-  File? _imageurl;
+  String? _imageurl;
 
   get uid => _uid;
   get username => _username;
