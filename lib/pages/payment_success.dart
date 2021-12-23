@@ -26,6 +26,7 @@ class _PaymentSuccessState extends State<PaymentSuccess> {
     return Center(
         child: Lottie.asset(
       "assets/lottie/done.json",
+      height: 300,
       repeat: false,
     ));
   }
