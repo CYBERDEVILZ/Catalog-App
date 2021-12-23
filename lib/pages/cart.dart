@@ -83,8 +83,8 @@ class _CartState extends State<Cart> {
   }
 
   void order({required int amount}) async {
-    String username = "rzp_test_dqC5RnBflXlKOs";
-    String password = "SEugTTMKyyBNDeuDX4JdC8Yv";
+    String username = ""; //razorpay_id
+    String password = ""; //razorpay_secret
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode("$username:$password"));
 
