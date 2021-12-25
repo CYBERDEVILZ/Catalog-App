@@ -2,9 +2,16 @@
 
 A functional Catalog App. Developed using **flutter framework** (Dart). Uses **Google Firebase** for back-end storage and authentication. Also includes a payment gateway: **Razorpay** (only for India). Supports **dark theme** too.
 
+--- 
+
 ## Demo
 
 https://user-images.githubusercontent.com/55954313/147378681-42c61620-e527-48a8-aa11-f3d20266dad5.mp4
+
+---
+
+# Themes
+The app supports two themes: **Light-Theme** and **Dark-Theme**
 
 ## Light-Theme
 
