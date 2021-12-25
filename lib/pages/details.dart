@@ -130,7 +130,7 @@ class _DetailsState extends State<Details> {
                                 child: Container(
                                   margin: const EdgeInsets.only(right: 20),
                                   child: Text(
-                                    "\$${widget.item.price}",
+                                    "\u20b9${widget.item.price}",
                                     style: TextStyle(
                                       color: Theme.of(context).cursorColor,
                                     ),

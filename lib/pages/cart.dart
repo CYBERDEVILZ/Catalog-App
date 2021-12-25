@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:catalog_app/models/item.dart';
 import 'package:catalog_app/pages/payment_success.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -83,32 +86,41 @@ class _CartState extends State<Cart> {
   }
 
   void order({required int amount}) async {
-    String username = ""; //razorpay_id
-    String password = ""; //razorpay_secret
-    String basicAuth =
-        'Basic ' + base64Encode(utf8.encode("$username:$password"));
+    String fileRead = await rootBundle
+        .loadString("assets/files/.env")
+        .then((value) => value)
+        .catchError((onError) => "");
+    if (fileRead != "") {
+      List<String> list = fileRead.split("\n");
+      String username = list[0].substring(7).trim(); //razorpay_id
+      print(username);
+      String password = list[1].substring(11).trim(); //razorpay_secret
+      print(password);
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode("$username:$password"));
 
-    var data = json.encode({"amount": amount, "currency": "INR"});
+      var data = json.encode({"amount": amount, "currency": "INR"});
 
-    Response response = await post(
-        Uri.parse("https://api.razorpay.com/v1/orders"),
-        headers: {
-          "authorization": basicAuth,
-          "content-type": "application/json"
-        },
-        body: data);
-    var response_json = json.decode(response.body);
-    print(response_json);
+      Response response = await post(
+          Uri.parse("https://api.razorpay.com/v1/orders"),
+          headers: {
+            "authorization": basicAuth,
+            "content-type": "application/json"
+          },
+          body: data);
+      var response_json = json.decode(response.body);
+      print(response_json);
 
-    var options = {
-      'key': username,
-      'amount': response_json["amount"], //in the smallest currency sub-unit.
-      'name': 'Catalog App',
-      'order_id': response_json["id"], // Generate order_id using Orders API
-      'description': 'Total Price',
-    };
+      var options = {
+        'key': username,
+        'amount': response_json["amount"], //in the smallest currency sub-unit.
+        'name': 'Catalog App',
+        'order_id': response_json["id"], // Generate order_id using Orders API
+        'description': 'Total Price',
+      };
 
-    _razorpay.open(options);
+      _razorpay.open(options);
+    }
   }
 
   @override
@@ -165,7 +177,7 @@ class _CartState extends State<Cart> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                "\$${item.price}",
+                                                "\u20b9${item.price}",
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -233,7 +245,7 @@ class _CartState extends State<Cart> {
                       height: 40,
                       child: FittedBox(
                         child: Text(
-                          "\$${getTotalPrice() / 100}",
+                          "\u20b9${getTotalPrice() / 100}",
                           style:
                               TextStyle(color: Theme.of(context).cursorColor),
                         ),

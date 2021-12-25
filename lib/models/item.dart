@@ -81,7 +81,7 @@ class ListTileCreator extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                "\$$price",
+                                "\u20b9$price",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
