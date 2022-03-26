@@ -86,36 +86,26 @@ class _CartState extends State<Cart> {
   }
 
   void order({required int amount}) async {
-    String fileRead = await rootBundle
-        .loadString("assets/files/.env")
-        .then((value) => value)
-        .catchError((onError) => "");
+    String fileRead =
+        await rootBundle.loadString("assets/files/.env").then((value) => value).catchError((onError) => "");
     if (fileRead != "") {
       List<String> list = fileRead.split("\n");
       String username = list[0].substring(7).trim(); //razorpay_id
-      print(username);
       String password = list[1].substring(11).trim(); //razorpay_secret
-      print(password);
-      String basicAuth =
-          'Basic ' + base64Encode(utf8.encode("$username:$password"));
+      String basicAuth = 'Basic ' + base64Encode(utf8.encode("$username:$password"));
 
       var data = json.encode({"amount": amount, "currency": "INR"});
 
-      Response response = await post(
-          Uri.parse("https://api.razorpay.com/v1/orders"),
-          headers: {
-            "authorization": basicAuth,
-            "content-type": "application/json"
-          },
-          body: data);
-      var response_json = json.decode(response.body);
-      print(response_json);
+      Response response = await post(Uri.parse("https://api.razorpay.com/v1/orders"),
+          headers: {"authorization": basicAuth, "content-type": "application/json"}, body: data);
+      var responseJson = json.decode(response.body);
+      print(responseJson);
 
       var options = {
         'key': username,
-        'amount': response_json["amount"], //in the smallest currency sub-unit.
+        'amount': responseJson["amount"], //in the smallest currency sub-unit.
         'name': 'Catalog App',
-        'order_id': response_json["id"], // Generate order_id using Orders API
+        'order_id': responseJson["id"], // Generate order_id using Orders API
         'description': 'Total Price',
       };
 
@@ -138,17 +128,15 @@ class _CartState extends State<Cart> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           height: 110,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
+                          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           child: Padding(
                             padding: const EdgeInsets.all(5),
                             child: Row(
                               children: [
                                 Container(
                                   width: 100,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15)),
+                                  decoration:
+                                      BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
                                   alignment: Alignment.center,
                                   padding: const EdgeInsets.all(8),
                                   child: Image.network(
@@ -173,16 +161,14 @@ class _CartState extends State<Cart> {
                                             ),
                                           ),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 "\u20b9${item.price}",
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Theme.of(context)
-                                                        .cursorColor),
+                                                    color: Theme.of(context).cursorColor),
                                               ),
                                               Row(
                                                 children: [
@@ -190,23 +176,14 @@ class _CartState extends State<Cart> {
                                                     onTap: () => decrease(item),
                                                     child: Icon(
                                                       Icons.arrow_drop_down,
-                                                      color: Theme.of(context)
-                                                          .accentColor
-                                                          .withOpacity(0.3),
+                                                      color: Theme.of(context).accentColor.withOpacity(0.3),
                                                     ),
                                                   ),
-                                                  Text(
-                                                      "${Cart.quantity[item.id]}"),
+                                                  Text("${Cart.quantity[item.id]}"),
                                                   GestureDetector(
-                                                      onTap: () =>
-                                                          increase(item.id),
-                                                      child: Icon(
-                                                          Icons.arrow_drop_up,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .accentColor
-                                                                  .withOpacity(
-                                                                      0.3)))
+                                                      onTap: () => increase(item.id),
+                                                      child: Icon(Icons.arrow_drop_up,
+                                                          color: Theme.of(context).accentColor.withOpacity(0.3)))
                                                 ],
                                               ),
                                               GestureDetector(
@@ -246,8 +223,7 @@ class _CartState extends State<Cart> {
                       child: FittedBox(
                         child: Text(
                           "\u20b9${getTotalPrice() / 100}",
-                          style:
-                              TextStyle(color: Theme.of(context).cursorColor),
+                          style: TextStyle(color: Theme.of(context).cursorColor),
                         ),
                       ),
                     ),
