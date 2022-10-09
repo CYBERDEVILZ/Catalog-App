@@ -4,7 +4,7 @@ A functional Catalog App. Developed using **flutter framework** (Dart). Uses **G
 
 --- 
 
-## Demo
+## Demo    
 
 https://user-images.githubusercontent.com/55954313/147378681-42c61620-e527-48a8-aa11-f3d20266dad5.mp4
 
